@@ -1,0 +1,5 @@
+
+    fetch("https://pokeapi.co/api/v2/pokemon/pikachu").then(async res => {
+        const json = await res.json()
+        setHeight(json.height)
+    })
