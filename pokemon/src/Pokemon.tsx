@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import PokemonAbility from "./PokemonAbility";
 import { PokemonType } from "./types";
 
-function Pokemon(props: { name: string|undefined; health: number; fainted?: () => void }) {
+function Pokemon(props: {
+  name: string | undefined;
+  health: number;
+  fainted?: () => void;
+}) {
   const [error, setError] = useState(false);
   const [health, setHealth] = useState(props.health);
   const [pokemon, setPokemon] = useState<PokemonType | null>(null);
@@ -13,9 +17,9 @@ function Pokemon(props: { name: string|undefined; health: number; fainted?: () =
 
   useEffect(() => {
     if (health <= 0) {
-        props.fainted?.()
+      props.fainted?.();
     }
-  },[health])
+  }, [health]);
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${props.name}`).then(
@@ -25,11 +29,11 @@ function Pokemon(props: { name: string|undefined; health: number; fainted?: () =
           setPokemon(data);
           return;
         }
-        setError(true)
+        setError(true);
       }
     );
   }, []);
-  if(error){
+  if (error) {
     return <>Error Loading pokemon</>;
   }
   if (!pokemon) {

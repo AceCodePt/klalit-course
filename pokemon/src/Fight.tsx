@@ -1,15 +1,18 @@
-import {useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Pokemon from "./Pokemon";
 
 export default function Fight(props: { names: string[] }) {
   const [faintedArray, setFaintedArray] = useState<boolean[]>(
     new Array(props.names.length).fill(false)
   );
-  const doWehaveAWinner = useMemo(() => faintedArray.filter(fainted => !fainted).length === 1,[faintedArray]);
-  if(doWehaveAWinner){
-    const indexOfWinner = faintedArray.findIndex(fainted=>!fainted);
+  const doWehaveAWinner = useMemo(
+    () => faintedArray.filter((fainted) => !fainted).length === 1,
+    [faintedArray]
+  );
+  if (doWehaveAWinner) {
+    const indexOfWinner = faintedArray.findIndex((fainted) => !fainted);
     const winnersName = props.names.at(indexOfWinner);
-    return <>The winner is {winnersName}</>
+    return <>The winner is {winnersName}</>;
   }
   return (
     <>
