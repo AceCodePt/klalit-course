@@ -6,11 +6,16 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Fight from "./Fight.tsx";
 import Pokemon from "./Pokemon.tsx";
+import PokemonWithPrams from "./PokemonWithPrams.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/pokemon",
     element: <Pokemon name="ditto" health={10} />,
+  },
+  {
+    path: "/pokemon/:pokemonName",
+    element: <PokemonWithPrams/>,
   },
   {
     path: "/fight",

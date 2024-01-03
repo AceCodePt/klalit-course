@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import PokemonAbility from "./PokemonAbility";
 import { PokemonType } from "./types";
 
-function Pokemon(props: { name: string; health: number; fainted?: () => void }) {
+function Pokemon(props: { name: string|undefined; health: number; fainted?: () => void }) {
+  const [error, setError] = useState(false);
   const [health, setHealth] = useState(props.health);
   const [pokemon, setPokemon] = useState<PokemonType | null>(null);
 
@@ -22,10 +23,15 @@ function Pokemon(props: { name: string; health: number; fainted?: () => void }) 
         if (res.status === 200) {
           const data = await res.json();
           setPokemon(data);
+          return;
         }
+        setError(true)
       }
     );
   }, []);
+  if(error){
+    return <>Error Loading pokemon</>;
+  }
   if (!pokemon) {
     return <>Loading pokemon</>;
   }
