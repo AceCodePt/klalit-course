@@ -1,12 +1,11 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
-import Pokemon from './Pokemon';
+import { useParams } from "react-router-dom";
+import Pokemon from "./Pokemon";
 
 export default function PokemonWithPrams() {
-    let { pokemonName } = useParams();
+  let { pokemonName } = useParams();
   return (
-   <>
-    <Pokemon name={pokemonName} health={100} />
-   </>
-  )
+    <>
+      <Pokemon name={pokemonName} health={100} />
+    </>
+  );
 }
