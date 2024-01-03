@@ -1,17 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./App.css";
+import "./index.css";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Pokemon from './Pokemon.tsx';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Fight from "./Fight.tsx";
+import Pokemon from "./Pokemon.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/pokemon",
-    element: <Pokemon name='ditto'/> 
+    element: <Pokemon name="ditto" health={10} />,
+  },
+  {
+    path: "/fight",
+    element: <Fight names={["ditto", "mew", "pichu"]} />,
   },
   {
     path: "/pokemon/ability",
@@ -19,8 +22,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

@@ -1,12 +1,12 @@
-import './App.css'
-import Pokemon from './Pokemon'
+import "./App.css";
+import Pokemon from "./Pokemon";
 
 function App() {
   return (
     <>
-    <Pokemon name='pikachu'/>
+      <Pokemon name="pikachu" />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
