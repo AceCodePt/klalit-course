@@ -5,17 +5,32 @@ import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Fight from "./Fight.tsx";
-import Pokemon from "./Pokemon.tsx";
 import PokemonWithPrams from "./PokemonWithPrams.tsx";
+import NestedMain from "./nested-routing/NestedMain.tsx";
+import PokemonLayout from "./pokemon/PokemonLayout.tsx";
+import PokemonList from "./pokemon/PokemonList.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/pokemon",
-    element: <Pokemon name="ditto" health={10} />,
+    path: "*",
+    element: <> Not Found whatever</>
   },
   {
-    path: "/pokemon/:pokemonName",
-    element: <PokemonWithPrams />,
+    path: "/pokemon",
+    element: <PokemonLayout />,
+    children: [
+      {
+        path: "",
+        element: <PokemonList />
+      },
+      {
+        path: ":pokemonName",
+        element: <PokemonWithPrams />,
+      }, {
+        path: "*",
+        element: <> pokemon Not Found</>
+      },
+    ]
   },
   {
     path: "/fight",
@@ -25,6 +40,20 @@ const router = createBrowserRouter([
     path: "/pokemon/ability",
     element: <div>ability</div>,
   },
+  {
+    path: "/nested",
+    element: <NestedMain />,
+    children: [
+      {
+        path: "",
+        element: <>check</>
+      },
+      {
+        path: "foo",
+        element: <>bar</>
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
