@@ -1,0 +1,4 @@
+{
+    "/pokemons": "/pokemons",
+    "/pokemons/:name": "/details/:name"
+}
