@@ -1,17 +1,21 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useGetPokemonDetailQuery } from "../store/api";
+import {
+  useGetPokemonDetailQuery,
+  useUpdatePokemonMutation,
+} from "../store/api";
 
 export default function PokemonDetails() {
   const navigate = useNavigate();
   const params = useParams();
   const [details, setDetails] = useState({ height: 0, weight: 0 });
+  const [updatePokemon] = useUpdatePokemonMutation();
   if (!params.pokemonName) {
     return <> Pokemon name must be defined and exist</>;
   }
-  const { data, isError, isLoading, isSuccess } = useGetPokemonDetailQuery(
-    params.pokemonName,
-  );
+  const { data, isError, isLoading, isSuccess } = useGetPokemonDetailQuery({
+    pokemonName: params.pokemonName,
+  });
 
   useEffect(() => {
     setDetails({ height: data?.height || 0, weight: data?.weight || 0 });
@@ -66,11 +70,11 @@ export default function PokemonDetails() {
         </div>
         <button
           onClick={() => {
-            // updatePokemon({
-            //   pokemonName: data.name,
-            //   height: details.height,
-            //   weight: details.weight,
-            // });
+            updatePokemon({
+              pokemonName: data.name,
+              height: details.height,
+              weight: details.weight,
+            });
           }}
         >
           Update

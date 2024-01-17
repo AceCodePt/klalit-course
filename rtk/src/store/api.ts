@@ -12,6 +12,7 @@ export const api = createApi({
       "Content-Type": "application/json",
     },
   }),
+  tagTypes: ["details"],
   endpoints(builder) {
     return {
       getPokemonList: builder.query<PokemonListType, any>({
@@ -30,7 +31,9 @@ export const api = createApi({
             url: "/details/" + pokemonName.toLowerCase(),
           };
         },
+        providesTags: ["details"],
       }),
+
       updatePokemon: builder.mutation<
         any,
         { pokemonName: string; height: number; weight: number }
@@ -42,6 +45,7 @@ export const api = createApi({
             body: JSON.stringify({ id: pokemonName, height, weight }),
           };
         },
+        invalidatesTags: ["details"],
       }),
       deletePokemonFromList: builder.mutation<any, { pokemonName: string }>({
         query({ pokemonName }) {
