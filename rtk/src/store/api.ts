@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
-
 // queryFn -> Return the information
 // query -> baseQuery -> Return the information
 
