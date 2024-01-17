@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
-import { useGetPokemonListQuery } from "../store/api";
+import {
+  useDeletePokemonFromListMutation,
+  useGetPokemonListQuery,
+} from "../store/api";
 
 export default function PokemonList() {
   const { data, isLoading, isError, isSuccess } = useGetPokemonListQuery("");
+  const [deletePokemon] = useDeletePokemonFromListMutation();
 
   if (isLoading) {
     return <>Loading the pokemon list</>;
@@ -15,13 +19,13 @@ export default function PokemonList() {
     <article>
       <h2>Overview</h2>
       <ol start={1}>
-        {data.map((pokemon: any) => {
+        {data.map((pokemon) => {
           return (
             <li key={pokemon.name}>
               <Link to={`/${pokemon.name}`}>{pokemon.name}</Link>
               <button
                 onClick={() => {
-                  // removePokemon({ pokemonName: pokemon.name });
+                  deletePokemon({ pokemonName: pokemon.name });
                 }}
               >
                 remove
@@ -30,6 +34,12 @@ export default function PokemonList() {
           );
         })}
       </ol>
+      <PokemonList2 />
     </article>
   );
+}
+
+function PokemonList2() {
+  const { data } = useGetPokemonListQuery("");
+  return <div>{JSON.stringify(data)}</div>;
 }

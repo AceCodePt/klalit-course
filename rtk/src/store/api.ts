@@ -12,7 +12,7 @@ export const api = createApi({
       "Content-Type": "application/json",
     },
   }),
-  tagTypes: ["details"],
+  tagTypes: ["pokemons", "details"],
   endpoints(builder) {
     return {
       getPokemonList: builder.query<PokemonListType, any>({
@@ -21,6 +21,7 @@ export const api = createApi({
             url: "/pokemons",
           };
         },
+        providesTags: ["pokemons"],
       }),
       getPokemonDetail: builder.query<
         PokemonDetailsType,
@@ -54,6 +55,7 @@ export const api = createApi({
             method: "DELETE",
           };
         },
+        invalidatesTags: ["pokemons"],
       }),
     };
   },
@@ -63,11 +65,13 @@ const {
   useGetPokemonListQuery,
   useGetPokemonDetailQuery,
   useUpdatePokemonMutation,
+  useDeletePokemonFromListMutation,
 } = api;
 export {
   useGetPokemonListQuery,
   useGetPokemonDetailQuery,
   useUpdatePokemonMutation,
+  useDeletePokemonFromListMutation,
 };
 
 export type PokemonListType = {
