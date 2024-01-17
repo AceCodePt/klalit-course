@@ -1,4 +1,4 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -6,31 +6,48 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 // query -> baseQuery -> Return the information
 
 export const api = createApi({
-  async baseQuery({ pathname }) {
-    try {
-      const response = await fetch(new URL(pathname, "http://localhost:3000"));
-      if (response.ok) {
-        const data = await response.json();
-        return { data };
-      }
-      return { error: "An error has occured" };
-    } catch (error) {
-      return { error };
-    }
-  },
+  baseQuery: fetchBaseQuery({
+    baseUrl: "http://localhost:3000",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }),
   endpoints(builder) {
     return {
-      getPokemonList: builder.query({
+      getPokemonList: builder.query<PokemonListType, any>({
         query() {
           return {
-            pathname: "pokemons",
+            url: "/pokemons",
           };
         },
       }),
-      getPokemonDetail: builder.query({
-        query(pokemonName) {
+      getPokemonDetail: builder.query<
+        PokemonDetailsType,
+        { pokemonName: string }
+      >({
+        query({ pokemonName }) {
           return {
-            pathname: "/pokemons/" + pokemonName.toLowerCase(),
+            url: "/details/" + pokemonName.toLowerCase(),
+          };
+        },
+      }),
+      updatePokemon: builder.mutation<
+        any,
+        { pokemonName: string; height: number; weight: number }
+      >({
+        query({ pokemonName, height, weight }) {
+          return {
+            url: "/details/" + pokemonName.toLowerCase(),
+            method: "PATCH",
+            body: JSON.stringify({ id: pokemonName, height, weight }),
+          };
+        },
+      }),
+      deletePokemonFromList: builder.mutation<any, { pokemonName: string }>({
+        query({ pokemonName }) {
+          return {
+            url: "/pokemons/" + pokemonName.toLowerCase(),
+            method: "DELETE",
           };
         },
       }),
@@ -38,15 +55,21 @@ export const api = createApi({
   },
 });
 
-const { useGetPokemonListQuery, useGetPokemonDetailQuery } = api;
-export { useGetPokemonListQuery, useGetPokemonDetailQuery };
+const {
+  useGetPokemonListQuery,
+  useGetPokemonDetailQuery,
+  useUpdatePokemonMutation,
+} = api;
+export {
+  useGetPokemonListQuery,
+  useGetPokemonDetailQuery,
+  useUpdatePokemonMutation,
+};
 
-export interface PokemonListType {
-  results: {
-    name: string;
-    url: string;
-  }[];
-}
+export type PokemonListType = {
+  name: string;
+  url: string;
+}[];
 
 export interface PokemonDetailsType {
   id: string;
