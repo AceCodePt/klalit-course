@@ -3,17 +3,17 @@
         {
             "id": "bulbasaur",
             "name": "Bulbasaur",
-            "detailId": "1"
+            "detailId": "11"
         },
         {
             "id": "ivysaur",
             "name": "Ivysaur",
-            "detailId": "2"
+            "detailId": "22"
         },
         {
             "id": "venusaur",
             "name": "Venusaur",
-            "detailId": "3"
+            "detailId": "33"
         }
     ],
     "details": [

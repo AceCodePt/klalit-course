@@ -1,8 +1,16 @@
 import { Link } from "react-router-dom";
-import { fakePokemonsList } from "../data/pokemon";
+import { useGetPokemonListQuery } from "../store/api";
 
 export default function PokemonList() {
-  const data = fakePokemonsList;
+  const { data, isLoading, isError, isSuccess } = useGetPokemonListQuery("");
+
+  if (isLoading) {
+    return <>Loading the pokemon list</>;
+  }
+  if (isError || !isSuccess) {
+    return <>An Error occured</>;
+  }
+
   return (
     <article>
       <h2>Overview</h2>

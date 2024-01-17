@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fakePokemonDetails } from "../data/pokemon";
+import { useGetPokemonDetailQuery } from "../store/api";
 
 export default function PokemonDetails() {
   const navigate = useNavigate();
@@ -9,11 +9,20 @@ export default function PokemonDetails() {
   if (!params.pokemonName) {
     return <> Pokemon name must be defined and exist</>;
   }
-  const data = fakePokemonDetails.find((x) => x.name === params.pokemonName)!;
+  const { data, isError, isLoading, isSuccess } = useGetPokemonDetailQuery(
+    params.pokemonName,
+  );
 
   useEffect(() => {
     setDetails({ height: data?.height || 0, weight: data?.weight || 0 });
   }, [data]);
+
+  if (isLoading) {
+    return <>Loading the pokemon datails</>;
+  }
+  if (isError || !isSuccess) {
+    return <>An Error occured pokemon details</>;
+  }
 
   return (
     <>

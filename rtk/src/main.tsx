@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-// import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import PokemonList from "./components/PokemonList.tsx";
 import PokemonDetails from "./components/PokemonDetails.tsx";
+import { api } from "./store/api.ts";
 
 const routes = createBrowserRouter([
   {
@@ -30,6 +31,8 @@ const routes = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={routes} />
+    <ApiProvider api={api}>
+      <RouterProvider router={routes} />
+    </ApiProvider>
   </React.StrictMode>,
 );
